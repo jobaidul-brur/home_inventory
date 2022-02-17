@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}
+            Item List
+        {% endblock title %}
+{% block body %}
+    <div class="container">
+     {% if message %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endif %}
+        {% if items %}
+            <div class="row">
+                {% for item in items %}
+                    <div class="card col-auto m-5">
+                        <img src="{{ item.image }}" class="card-img-top" alt="..." style="width: 150px">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.name }}</h5>
+                            <p class="card-text">{{ item.description }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-auto"><p class="h5">{{ item.price }}</p></div>
+                                <div class="col-auto"><a href="{% url 'inventory:edit' item.id %}">Edit</a></div>
+                                <div class="col-auto"><a href="{% url 'inventory:delete' item.id %}" class="text-danger">Delete</a></div>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No items</p>
+        {% endif %}
+    </div>
+{% endblock body %}

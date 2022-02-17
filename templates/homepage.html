@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
+{% block title %}
+            Home
+        {% endblock title %}
 {% block body %}
     <div class="container">
-        <h1>Welcome to Home Inventory</h1>
+        <h1>Welcome to HOME InVentory</h1>
         {% if request.user.is_authenticated %}
             <p>You are logged in as {{ user.username }}</p>
-            <p>
-                <a href="/users/logout/">Logout</a>
-            </p>
         {% else %}
             <p>You are not logged in</p>
-            <p>Please login <a href="/users/login/">here</a></p>
         {% endif %}
     </div>
 {% endblock body %}

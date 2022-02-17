@@ -23,6 +23,7 @@ def home_page(request):
 
 
 urlpatterns = [
+    path('inventory/', include('inventory.urls')),
     path('users/', include('users.urls')),
     path('admin/', admin.site.urls),
     path('', home_page, name='home'),

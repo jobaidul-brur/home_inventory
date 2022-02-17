@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}
+    Profile
+{% endblock title %}
+{% block body %}
+    <div class="container">
+        {% if message %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Profile</h1>
+                <p>
+                    <a href="{% url 'users:edit' %}" class="btn btn-primary">Edit</a>
+                </p>
+                <p>
+                    <a href="{% url 'users:change_password' %}" class="btn btn-primary">Change Password</a>
+                </p>
+                <p>
+                    <a href="{% url 'users:deactivate' %}" class="btn btn-danger">Deactivate Account</a>
+                </p>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Info</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>First Name</td>
+                        <td>{{ user.first_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Last Name</td>
+                        <td>{{ user.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

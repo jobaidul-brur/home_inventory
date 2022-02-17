@@ -1,13 +1,18 @@
+from django.contrib.auth.models import User
 from django.db import models
-from django.utils import timezone
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 
 class Item(models.Model):
-    short_name = models.CharField(max_length=50, null=True, blank=True)
-    description = models.CharField(max_length=250, null=True, blank=True)
-    picture = models.URLField(null=True, blank=True)
-    location_id = models.IntegerField(null=True, blank=True)
-    lend_id = models.IntegerField(null=True, blank=True)
-    lend_date = models.DateTimeField(default=timezone.now)
-    quantity = models.IntegerField(null=True, blank=True)
-    price = models.FloatField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    description = models.TextField()
+    image = models.URLField(max_length=200)
