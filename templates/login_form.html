@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container">
+        <form action="" method="post">
+            {% csrf_token %}
+            {% if message %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endif %}
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" class="form-control">
+            <label for="password">Password</label>
+            <input type="text" name="password" id="password" class="form-control">
+            <button class="btn btn-success">Log in</button>
+        </form>
+    </div>
+{% endblock body %}
