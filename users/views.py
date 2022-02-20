@@ -19,11 +19,11 @@ def register_user(request):
             message = 'There is already an user with that username'
         if User.objects.filter(email=email).exists():
             message = 'There is already an user with that email'
-        if len(username) <= 3:
+        if len(username) < 3:
             message = 'Username must be at least 3 characters long'
         if len(username) >= 30:
             message = 'Username must be less than 30 characters long'
-        if len(password) <= 4:
+        if len(password) < 4:
             message = 'Password must be at least 4 characters long'
         if message:
             context = {'message': message}

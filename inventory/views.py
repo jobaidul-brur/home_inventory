@@ -1,3 +1,5 @@
+import operator
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -10,18 +12,24 @@ from .models import Item, Category
 def create_item(request):
     if request.method == 'POST':
         data = request.POST
-        category_id = data['category']
+        category_id = data.get('category')
         category = Category.objects.get(id=category_id)
-        name = data['name']
-        price = data['price']
-        description = data['description']
-        image = data['image']
+        name = data.get('name')
+        price = data.get('price').replace(',', '')
+        description = data.get('description')
+        image = data.get('image')
+
+        if float(price) >= 1_000_000_000:
+            message = 'Price must be less than 1,000,000,000'
+            categories = sorted(Category.objects.all(), key=operator.attrgetter('name'))
+            return render(request, 'product_form.html', {'categories': categories, 'message': message, 'edit': False})
+
         Item.objects.create(category=category, name=name, price=price, description=description, image=image,
                             user=request.user)
-        return HttpResponseRedirect(reverse('inventory:list'))
+        return HttpResponseRedirect(reverse('inventory:list', args=('Item Created Successfully',)))
     else:
-        categories = Category.objects.all()
-        return render(request, 'product_form.html', {'categories': categories})
+        categories = sorted(Category.objects.all(), key=operator.attrgetter('name'))
+        return render(request, 'product_form.html', {'categories': categories, 'edit' : False})
 
 
 @login_required
@@ -31,16 +39,23 @@ def edit_item(request, item_id):
     item = Item.objects.get(id=item_id)
     if request.method == 'POST':
         data = request.POST
-        item.category_id = data['category']
-        item.name = data['name']
-        item.price = data['price']
-        item.description = data['description']
-        item.image = data['image']
+
+        if float(data.get('price').replace(",", "")) >= 1_000_000_000:
+            message = 'Price must be less than 1,000,000,000'
+            categories = sorted(Category.objects.all(), key=operator.attrgetter('name'))
+            return render(request, 'product_form.html', {'categories': categories, 'item': item, 'message': message, 'edit': True})
+
+        item.category_id = data.get('category')
+        item.name = data.get('name')
+        item.price = data.get('price').replace(",", "")
+        item.description = data.get('description')
+        item.image = data.get('image')
+
         item.save()
         return HttpResponseRedirect(reverse('inventory:list'))
     else:
-        categories = Category.objects.all()
-        return render(request, 'product_form.html', {'categories': categories, 'item': item})
+        categories = sorted(Category.objects.all(), key=operator.attrgetter('name'))
+        return render(request, 'product_form.html', {'categories': categories, 'item': item, 'edit' : True})
 
 
 @login_required

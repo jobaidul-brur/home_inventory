@@ -6,20 +6,26 @@
     <div class="container">
         <form action="" class="form-control" method="post">
         {% csrf_token %}
+            {% if message %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endif %}
             <label for="category" class="form-label">Category</label>
-            <select name="category" id="category" class="form-select">
+            <select name="category" id="category" class="form-select" required>
+                {% if edit == False %}
+                    <option value="" disabled selected>Select Category</option>
+                {% endif %}
                 {% for category in categories %}
                     <option value="{{ category.id }}">{{ category.name }}</option>
                 {% endfor %}
             </select>
             <label for="name" class="form-label">Name</label>
-            <input type="text" name="name" id="name" value="{{ item.name }}" class="form-control">
+            <input type="text" name="name" id="name" value="{{ item.name }}" maxlength="99" class="form-control" required>
             <label for="price" class="form-label">Price</label>
-            <input type="text" name="price" id="price" value="{{ item.price }}" class="form-control">
+            <input type="text" name="price" id="price" value="{{ item.price }}" class="form-control" required>
             <label for="description" class="form-label">Description</label>
-            <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ item.description }}</textarea>
-            <label for="image" class="form-label">Image</label>
-            <input type="text" name="image" id="image" value="{{ item.image }}" class="form-control">
+            <textarea name="description" id="description" cols="30" rows="10" maxlength="999" class="form-control">{{ item.description }}</textarea>
+            <label for="image" class="form-label">Image Link</label>
+            <input type="text" name="image" id="image" value="{{ item.image }}" maxlength="499"class="form-control">
             <input type="submit" value="Submit" class="btn btn-success">
         </form>
     </div>

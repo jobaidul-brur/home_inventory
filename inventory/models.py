@@ -12,7 +12,7 @@ class Category(models.Model):
 class Item(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    description = models.TextField()
-    image = models.URLField(max_length=200)
+    name = models.CharField(max_length=99)
+    price = models.DecimalField(max_digits=12, decimal_places=2)
+    description = models.TextField(999)
+    image = models.URLField(max_length=499)

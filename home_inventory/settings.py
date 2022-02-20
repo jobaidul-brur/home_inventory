@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
         'NAME': 'home_inventory',
-        'PASSWORD': '1234',
+        'PASSWORD': 'admin',
         'TEST': {
             'NAME': 'mytestdatabase',
         },
@@ -125,6 +125,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# I added this
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
